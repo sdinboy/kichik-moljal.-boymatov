@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Checkout code
@@ -28,7 +28,7 @@ jobs:
       run: |
         pip install --upgrade pip setuptools virtualenv
         pip install git+https://github.com/kivy/buildozer.git
-        pip install cython
+        pip install "cython<3.0.0"
 
     - name: Build APK with Buildozer
       run: |
