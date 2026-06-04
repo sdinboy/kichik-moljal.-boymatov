@@ -1,0 +1,38 @@
+name: Build Android APK (HTML to APK)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v3
+
+    - name: Set up Java JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Install Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Initialize and Build Web APK
+      run: |
+        sudo npm install -g cordova
+        cordova create kichik_moljal org.d20.kichik_moljal "Kichik Moljal D-20"
+        cd kichik_moljal
+        cordova platform add android
+        rm -rf www/*
+        cp ../index.html www/
+        cordova build android --release
+
+    - name: Upload Finished APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: Kichik-Moljal-APK
+        path: kichik_moljal/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk
+        
