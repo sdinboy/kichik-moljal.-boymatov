@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout code
@@ -16,14 +16,13 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.11'
 
     - name: Install system dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y libsqlite3-dev sqlite3 bzip2 libbz2-dev libssl-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libreadline-dev uuid-dev libffi-dev
-        sudo apt-get install -y cmake openjdk-17-jdk-headless unzip
-        sudo apt-get install -y libncurses5 libstdc++6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386
+        sudo apt-get install -y cmake openjdk-17-jdk-headless unzip libncurses5
 
     - name: Install Buildozer and Cython
       run: |
@@ -40,5 +39,6 @@ jobs:
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
-        name: K
+        name: Kichik-Moljal-APK
+        path: bin/*.apk
         
